@@ -160,8 +160,8 @@ export function fmtValue(v: unknown): string {
   if (typeof v === 'number') {
     if (Number.isInteger(v)) return String(v);
     const a = Math.abs(v);
-    if (a !== 0 && (a < 1e-4 || a >= 1e7)) return v.toExponential(4);
-    return String(Math.round(v * 1e6) / 1e6);
+    if (a !== 0 && (a < 1e-4 || a >= 1e15)) return v.toExponential(4);
+    return String(Math.round(v * 1e6) / 1e6); // keeps e.g. epoch seconds readable
   }
   if (typeof v === 'string') return JSON.stringify(v);
   return String(v);

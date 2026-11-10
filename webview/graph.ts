@@ -276,6 +276,11 @@ function stylesheet(): cytoscape.Stylesheet[] {
         'text-background-shape': 'roundrectangle',
       } as unknown as cytoscape.Css.Edge,
     },
+    {
+      // edges that point against the layout direction (cycles) are drawn as arcs so they do not overlap forward edges
+      selector: 'edge.back',
+      style: { 'curve-style': 'unbundled-bezier', 'control-point-distances': [70], 'control-point-weights': [0.5] } as unknown as cytoscape.Css.Edge,
+    },
     { selector: '.faded', style: { opacity: 0.16 } },
     { selector: 'edge.hl', style: { 'line-color': P.accent, 'target-arrow-color': P.accent, width: 2.2, 'z-index': 10, color: P.fg } },
     {
@@ -529,6 +534,7 @@ function runLayout(doFit: boolean): void {
   const dagreOpts = { name: 'dagre', rankDir: ui.rankdir, nodeSep: 14, rankSep: 60, edgeSep: 8, fit: false, animate: false };
   if (ui.groupNs) {
     cy.layout({ ...dagreOpts, padding: 30 } as cytoscape.LayoutOptions).run();
+    markBackEdges();
     if (doFit) fit();
     return;
   }
@@ -583,7 +589,19 @@ function runLayout(doFit: boolean): void {
       n.position({ x: off + (i % cols) * singleW + singleW / 2, y: y + r * singleH + singleH / 2 });
     });
   }
+  markBackEdges();
   if (doFit) fit();
+}
+
+function markBackEdges(): void {
+  const lr = ui.rankdir === 'LR';
+  cy.batch(() => {
+    cy.edges().forEach((e) => {
+      const s = e.source().position();
+      const t = e.target().position();
+      e.toggleClass('back', lr ? t.x < s.x - 1 : t.y < s.y - 1);
+    });
+  });
 }
 
 function updateLabels(): void {
