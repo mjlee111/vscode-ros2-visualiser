@@ -356,7 +356,7 @@
     "test:ui": "node test/ui_e2e.mjs test-shots"
   },
   "devDependencies": {
-    "@types/cytoscape": "^3.21.9",
+    "@types/cytoscape": "3.21.9",
     "@types/node": "^18.19.0",
     "@types/three": "0.170.0",
     "@types/vscode": "1.85.0",
