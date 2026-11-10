@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232833"/>
+      <stop offset="1" stop-color="#12151b"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c5d9c"/>
+      <stop offset="1" stop-color="#1d3f6e"/>
+    </linearGradient>
+    <linearGradient id="trace" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffb547"/>
+      <stop offset="1" stop-color="#ff7a45"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9aa6b8"/>
+    </marker>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="52" fill="url(#bg)"/>
+  <rect x="8.75" y="8.75" width="238.5" height="238.5" rx="51.25" fill="none" stroke="#3a4250" stroke-width="1.5"/>
+
+  <!-- graph: node -> topic -> node -->
+  <path d="M100 66 H128" stroke="#9aa6b8" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M206 84 V104 a10 10 0 0 1 -10 10 H140" stroke="#9aa6b8" stroke-width="5" fill="none" stroke-linejoin="round" marker-end="url(#arrow)"/>
+  <rect x="34" y="47" width="66" height="38" rx="19" fill="url(#node)" stroke="#5aa9ff" stroke-width="4.5"/>
+  <rect x="138" y="49" width="84" height="34" rx="6" fill="#2a303b" stroke="#a7b1c2" stroke-width="3.5" stroke-dasharray="0"/>
+  <rect x="150" y="62" width="44" height="8" rx="4" fill="#a7b1c2" opacity="0.55"/>
+  <rect x="64" y="95" width="74" height="38" rx="19" fill="url(#node)" stroke="#5aa9ff" stroke-width="4.5"/>
+
+  <!-- live signal panel -->
+  <rect x="34" y="150" width="188" height="72" rx="14" fill="#0d1015" stroke="#323a47" stroke-width="2"/>
+  <path d="M46 186 H210" stroke="#2b323d" stroke-width="2"/>
+  <path d="M46 186 C 58 186, 62 160, 74 160 S 90 212, 102 212 S 118 166, 130 166 S 146 204, 158 204 S 174 172, 186 172 S 200 192, 210 188"
+        stroke="url(#trace)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="210" cy="188" r="6" fill="#ff7a45"/>
+</svg>

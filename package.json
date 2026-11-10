@@ -1,0 +1,378 @@
+{
+  "name": "ros2-visualiser",
+  "displayName": "ROS 2 Visualiser",
+  "description": "rqt-style ROS 2 tools inside VS Code: node graph, topic monitor (Hz, bandwidth, echo), image and point cloud views, plot, service caller, publisher, parameters, console, TF tree and URDF viewer.",
+  "icon": "media/icon.png",
+  "version": "0.1.0",
+  "publisher": "mjlee111",
+  "author": {
+    "name": "Myeongjin Lee",
+    "email": "menggu1234@naver.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjlee111/vscode-ros-visualiser.git"
+  },
+  "homepage": "https://github.com/mjlee111/vscode-ros-visualiser#readme",
+  "bugs": {
+    "url": "https://github.com/mjlee111/vscode-ros-visualiser/issues"
+  },
+  "private": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "ros",
+    "ros2",
+    "rqt",
+    "rqt_graph",
+    "rviz",
+    "urdf",
+    "robotics",
+    "pointcloud",
+    "tf"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onWebviewPanel:rosVis.graph",
+    "onWebviewPanel:rosVis.topics",
+    "onWebviewPanel:rosVis.image",
+    "onWebviewPanel:rosVis.pointcloud",
+    "onWebviewPanel:rosVis.plot",
+    "onWebviewPanel:rosVis.service",
+    "onWebviewPanel:rosVis.publisher",
+    "onWebviewPanel:rosVis.params",
+    "onWebviewPanel:rosVis.console",
+    "onWebviewPanel:rosVis.tf",
+    "onWebviewPanel:rosVis.urdf"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "rosVis",
+          "title": "ROS 2",
+          "icon": "media/ros.svg"
+        }
+      ]
+    },
+    "views": {
+      "rosVis": [
+        {
+          "id": "rosVis.tools",
+          "name": "Tools"
+        },
+        {
+          "id": "rosVis.explorer",
+          "name": "Graph Explorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "rosVis.openGraph",
+        "title": "Node Graph (rqt_graph)",
+        "category": "ROS",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "rosVis.openTopics",
+        "title": "Topic Monitor (rqt_topic)",
+        "category": "ROS",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "rosVis.openImage",
+        "title": "Image View (rqt_image_view)",
+        "category": "ROS",
+        "icon": "$(file-media)"
+      },
+      {
+        "command": "rosVis.openPointCloud",
+        "title": "3D / Point Cloud View",
+        "category": "ROS",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "rosVis.openPlot",
+        "title": "Plot (rqt_plot)",
+        "category": "ROS",
+        "icon": "$(graph-line)"
+      },
+      {
+        "command": "rosVis.openService",
+        "title": "Service Caller (rqt_service_caller)",
+        "category": "ROS",
+        "icon": "$(call-outgoing)"
+      },
+      {
+        "command": "rosVis.openPublisher",
+        "title": "Message Publisher (rqt_publisher)",
+        "category": "ROS",
+        "icon": "$(broadcast)"
+      },
+      {
+        "command": "rosVis.openParams",
+        "title": "Parameters (rqt_reconfigure)",
+        "category": "ROS",
+        "icon": "$(settings)"
+      },
+      {
+        "command": "rosVis.openConsole",
+        "title": "Console /rosout (rqt_console)",
+        "category": "ROS",
+        "icon": "$(output)"
+      },
+      {
+        "command": "rosVis.openTf",
+        "title": "TF Tree (rqt_tf_tree)",
+        "category": "ROS",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "rosVis.openUrdf",
+        "title": "URDF Viewer",
+        "category": "ROS",
+        "icon": "$(hubot)"
+      },
+      {
+        "command": "rosVis.showInterface",
+        "title": "Show Interface Definition",
+        "category": "ROS",
+        "icon": "$(symbol-structure)"
+      },
+      {
+        "command": "rosVis.restartBackend",
+        "title": "Restart ROS Backend",
+        "category": "ROS",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "rosVis.showOutput",
+        "title": "Show Backend Log",
+        "category": "ROS",
+        "icon": "$(output)"
+      },
+      {
+        "command": "rosVis.copyName",
+        "title": "Copy Name",
+        "category": "ROS"
+      },
+      {
+        "command": "rosVis.quickOpen",
+        "title": "Open Tool…",
+        "category": "ROS",
+        "icon": "$(radio-tower)"
+      },
+      {
+        "command": "rosVis.openUrdfFile",
+        "title": "Open in URDF Viewer",
+        "category": "ROS",
+        "icon": "$(hubot)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "rosVis.openGraph",
+          "when": "view == rosVis.explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "rosVis.openTopics",
+          "when": "view == rosVis.explorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "rosVis.restartBackend",
+          "when": "view == rosVis.explorer || view == rosVis.tools",
+          "group": "navigation@9"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "rosVis.openTopics",
+          "when": "view == rosVis.explorer && viewItem =~ /\\btopic\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "rosVis.openImage",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bimage\\b/",
+          "group": "inline@2"
+        },
+        {
+          "command": "rosVis.openPointCloud",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bcloud\\b/",
+          "group": "inline@2"
+        },
+        {
+          "command": "rosVis.openTopics",
+          "when": "view == rosVis.explorer && viewItem =~ /\\btopic\\b/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "rosVis.openImage",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bimage\\b/",
+          "group": "1_open@2"
+        },
+        {
+          "command": "rosVis.openPointCloud",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bcloud\\b/",
+          "group": "1_open@3"
+        },
+        {
+          "command": "rosVis.openPlot",
+          "when": "view == rosVis.explorer && viewItem =~ /\\btopic\\b/",
+          "group": "1_open@4"
+        },
+        {
+          "command": "rosVis.openPublisher",
+          "when": "view == rosVis.explorer && viewItem =~ /\\btopic\\b/",
+          "group": "1_open@5"
+        },
+        {
+          "command": "rosVis.openService",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bservice\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "rosVis.openService",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bservice\\b/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "rosVis.openParams",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bnode\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "rosVis.openParams",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bnode\\b/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "rosVis.showInterface",
+          "when": "view == rosVis.explorer && viewItem =~ /\\btyped\\b/",
+          "group": "2_info@1"
+        },
+        {
+          "command": "rosVis.copyName",
+          "when": "view == rosVis.explorer && viewItem =~ /\\bnamed\\b/",
+          "group": "3_copy@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "rosVis.copyName",
+          "when": "false"
+        },
+        {
+          "command": "rosVis.openUrdfFile",
+          "when": "resourceExtname == .urdf || resourceExtname == .xacro"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "rosVis.openUrdfFile",
+          "when": "resourceExtname == .urdf || resourceExtname == .xacro",
+          "group": "navigation@90"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "rosVis.openUrdfFile",
+          "when": "resourceExtname == .urdf || resourceExtname == .xacro",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ROS 2 Visualiser",
+      "properties": {
+        "rosVis.pythonPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Python interpreter that can `import rclpy`. Empty = auto (`/usr/bin/python3` on Linux if present, else `python3`). Conda/venv interpreters usually do **not** match the ROS build."
+        },
+        "rosVis.setupScripts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Setup scripts to source before starting the backend, in order (e.g. `/opt/ros/jazzy/setup.bash`, `${workspaceFolder}/install/setup.bash`). Empty = use the VS Code environment; if ROS is not sourced there, `/opt/ros/<distro>/setup.bash` is auto-detected."
+        },
+        "rosVis.autoSourceWorkspace": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Also source `${workspaceFolder}/install/setup.bash` when it exists (needed for custom message types)."
+        },
+        "rosVis.domainId": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "minimum": 0,
+          "maximum": 232,
+          "description": "Override ROS_DOMAIN_ID for the backend (null = inherit)."
+        },
+        "rosVis.rmwImplementation": {
+          "type": "string",
+          "default": "",
+          "description": "Override RMW_IMPLEMENTATION for the backend (empty = inherit)."
+        },
+        "rosVis.graphPollInterval": {
+          "type": "number",
+          "default": 1,
+          "minimum": 0.2,
+          "description": "Seconds between ROS graph polls."
+        },
+        "rosVis.image.jpegQuality": {
+          "type": "integer",
+          "default": 85,
+          "minimum": 10,
+          "maximum": 100,
+          "description": "JPEG quality used to stream raw images to the image view. Changing it restarts the backend."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p webview/tsconfig.json --noEmit",
+    "package": "node scripts/build.mjs --production && vsce package --no-dependencies",
+    "harness": "node scripts/build.mjs && node dist/harness.js",
+    "test": "node scripts/build.mjs && /usr/bin/python3 test/smoke_backend.py && node test/extension_host_test.js",
+    "test:ui": "node test/ui_e2e.mjs test-shots"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.21.9",
+    "@types/node": "^18.19.0",
+    "@types/three": "0.170.0",
+    "@types/vscode": "1.85.0",
+    "@types/ws": "^8.5.12",
+    "@vscode/vsce": "^2.32.0",
+    "cytoscape": "3.30.4",
+    "cytoscape-dagre": "2.5.0",
+    "esbuild": "0.24.0",
+    "playwright-core": "1.48.2",
+    "three": "0.170.0",
+    "typescript": "5.6.3",
+    "ws": "8.18.0"
+  },
+  "overrides": {
+    "undici": "6.29.0",
+    "https-proxy-agent": "7.0.6",
+    "http-proxy-agent": "7.0.2"
+  }
+}

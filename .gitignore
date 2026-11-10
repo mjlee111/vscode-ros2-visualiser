@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.vsix
+__pycache__/
+.omc
+.vscode/browse.vc.db*
+test-shots/
